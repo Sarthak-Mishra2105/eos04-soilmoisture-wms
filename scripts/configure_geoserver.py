@@ -221,6 +221,9 @@ Built as a CyberGIS course assignment; not an official NRSC/ISRO service.</abstr
 <numDecimals>8</numDecimals>
 <verbose>false</verbose>
 <verboseExceptions>false</verboseExceptions>
+<!-- Behind scripts/public_proxy.py, build URLs from the forwarded public host; locally (no headers) use localhost. -->
+<proxyBaseUrl>${{X-Forwarded-Proto}}://${{X-Forwarded-Host}}/geoserver</proxyBaseUrl>
+<useHeadersProxyURL>true</useHeadersProxyURL>
 <contact>
   <contactPerson>Sarthak Mishra</contactPerson>
   <contactOrganization>IIIT Hyderabad - Cyber GIS: Geospatial Web and GeoBI (course assignment)</contactOrganization>

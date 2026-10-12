@@ -8,16 +8,25 @@ I picked the EOS-04 SAR soil moisture product (`EOS-04_SAR-MRS_SM`) and publishe
 
 ## Service
 
-The service runs on a local GeoServer 3.0.1 install. The assignment allows localhost deployments.
+The service runs on GeoServer 3.0.1 on my laptop and is reachable from the internet through Tailscale Funnel. The public links work while the laptop is on and serving, which covers the evaluation period. Everything also runs on localhost if you set it up yourself.
 
 | | |
 |---|---|
-| WMS endpoint | `http://localhost:8080/geoserver/bhoonidhi/wms` |
+| Public WMS endpoint | `https://sarthak-pc.tailad9fb7.ts.net/geoserver/bhoonidhi/wms` |
+| Public web demo | https://sarthak-pc.tailad9fb7.ts.net/ |
+| Try it | [GetCapabilities](https://sarthak-pc.tailad9fb7.ts.net/geoserver/bhoonidhi/wms?service=WMS&version=1.3.0&request=GetCapabilities), [map for 9 August 2025](https://sarthak-pc.tailad9fb7.ts.net/geoserver/bhoonidhi/wms?service=WMS&version=1.3.0&request=GetMap&layers=eos04_soil_moisture&styles=&crs=EPSG:4326&bbox=28,74,32,78&width=800&height=800&format=image/png&transparent=true&time=2025-08-09) |
+| Local WMS endpoint | `http://localhost:8080/geoserver/bhoonidhi/wms` |
 | Layer | `eos04_soil_moisture` (full name `bhoonidhi:eos04_soil_moisture`) |
 | Operations | GetCapabilities, GetMap, GetFeatureInfo, GetLegendGraphic |
 | Time dimension | 29 acquisition days, 3 June to 24 October 2025; the latest day is the default |
 | CRS | EPSG:4326, CRS:84, EPSG:3857, EPSG:4269, EPSG:32643, EPSG:32644 |
-| Web demo | http://localhost:8080/geoserver/www/eos04-demo/index.html |
+| Local web demo | http://localhost:8080/geoserver/www/eos04-demo/index.html |
+
+### How the public endpoint works
+
+Tailscale Funnel gives the laptop a public HTTPS address. Requests go to Tailscale's relay servers, come back to the laptop over its existing Tailscale connection, and are handed to [`scripts/public_proxy.py`](scripts/public_proxy.py). That small gateway only lets read-only requests through to the soil moisture WMS, the demo page, the basemap and GeoServer's XML schemas. GeoServer's admin pages and REST API return 404 from outside, and WMS parameters that would make GeoServer fetch remote URLs are refused.
+
+The gateway also passes the public hostname on to GeoServer, and the `bhoonidhi` workspace is set to build its URLs from it. So GetCapabilities points clients at the public address when you reach it from outside, and at localhost when you use it locally.
 
 ## The gap
 
@@ -118,7 +127,7 @@ In WMS 1.3.0, a BBOX in EPSG:4326 is written as latitude, longitude. Use CRS:84 
 
 ## Testing
 
-[`scripts/test_wms.py`](scripts/test_wms.py) runs 51 checks against the live endpoint with real HTTP requests, and all 51 pass. The full report is in [`evidence/compliance_report.md`](evidence/compliance_report.md). The checks cover:
+[`scripts/test_wms.py`](scripts/test_wms.py) runs 51 checks against the live endpoint with real HTTP requests, and all 51 pass. The full report is in [`evidence/compliance_report.md`](evidence/compliance_report.md), and the same 51 checks also pass through the public URL ([`evidence/compliance_report_public.md`](evidence/compliance_report_public.md)). The checks cover:
 
 - the capabilities document validating against the WMS 1.3.0 XML schema and advertising the layer, CRS list, style, legend and TIME values,
 - maps in PNG and JPEG, the lat/lon axis order for EPSG:4326, CRS:84 giving the same image, and Web Mercator output,
@@ -147,6 +156,15 @@ The downloader refreshes its token when it expires, retries failed downloads, ch
 
 If your GeoServer is not at `http://localhost:8080/geoserver` with the default admin login, set `GEOSERVER_URL`, `GEOSERVER_USER` and `GEOSERVER_PASSWORD` before running the configuration script.
 
+To make your copy public the same way, start the gateway and point Tailscale Funnel at it (Funnel has to be enabled for your tailnet first):
+
+```powershell
+python -u scripts/public_proxy.py --port 8099
+tailscale funnel --bg 8099
+```
+
+Never point a tunnel at GeoServer's port 8080 directly, because that would expose the admin pages.
+
 The rasters are not in git. To move the service to another machine without downloading everything again, `python scripts/package_submission.py` writes a code bundle and a 59 MB data bundle to `submission/`. Extract both into the same folder, install the requirements, then run `configure_geoserver.py` and `test_wms.py`. Only `verify_data.py` needs the original ZIPs.
 
 ## Limitations
@@ -155,12 +173,13 @@ The rasters are not in git. To move the service to another machine without downl
 - A date in the TIME list means the satellite passed somewhere in the area that day, not everywhere. Places it didn't observe are transparent, which means no data rather than zero moisture.
 - Overlapping scenes from the same day are mosaicked, not averaged, and I haven't applied any quality screening because band 2 is undocumented.
 - The pixels are 0.005 degrees, so their size in metres changes slightly with latitude.
-- A localhost service is only reachable from the machine running it, and GeoServer has to keep the `data/mosaic/` folder where it is.
+- The public URL is served from my laptop, so it only answers while the laptop is on, GeoServer and the gateway are running, and Funnel is enabled. It will go offline after the evaluation.
+- GeoServer reads the rasters straight from `data/mosaic/`, so that folder has to stay where it is.
 
 ## Repository layout
 
 ```
-scripts/      download, preparation, verification, GeoServer setup and tests
+scripts/      download, preparation, verification, GeoServer setup, tests and the public gateway
 geoserver/    ImageMosaic index settings and the SLD style
 demo/         Leaflet client (Leaflet is bundled)
 evidence/     gap probes, test and verification reports, screenshots
