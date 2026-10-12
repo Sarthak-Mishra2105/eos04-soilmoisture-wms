@@ -1,0 +1,23 @@
+# Downloaded and derived rasters are large and come from Bhoonidhi; regenerate with scripts/
+data/raw/
+data/extracted/
+data/mosaic/*.tif
+data/mosaic/*.shp
+data/mosaic/*.shx
+data/mosaic/*.dbf
+data/mosaic/*.prj
+data/mosaic/*.qix
+data/mosaic/*.properties
+data/mosaic/sample_image*
+data/mosaic/*.xml
+data/stac_items.json
+data/download_progress.json
+data/*.tmp
+data/mosaic/*.fix
+data/mosaic/*.cpg
+data/mosaic/*.dat
+logs/
+submission/
+__pycache__/
+*.pyc
+.env

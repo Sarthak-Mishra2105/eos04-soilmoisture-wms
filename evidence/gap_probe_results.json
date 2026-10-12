@@ -1,0 +1,639 @@
+{
+  "run_at_utc": "2026-10-07T11:13:08+00:00",
+  "api_spec": {
+    "url": "https://bhoonidhi.nrsc.gov.in/bhoonidhi-api/",
+    "status": 200,
+    "keyword_counts": {
+      "STAC": 12,
+      "OGC": 0,
+      "WMS": 0,
+      "WMTS": 0,
+      "WCS": 0,
+      "WFS": 0,
+      "GetCapabilities": 0,
+      "GetMap": 0,
+      "tile": 0
+    },
+    "EOS-04_SAR-MRS_SM_listed": true,
+    "evidence": "evidence/probes/api_spec.txt"
+  },
+  "stac_anonymous": [
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/data/collections",
+      "status": 401,
+      "body_head": "{\"ErrorCode\":\"401\",\"Description\":\"UNAUTHORIZED\",\"Action\":\"Invalid session detected! Please login again.\"}",
+      "evidence": "evidence/probes/stac_bhoonidhi_api_nrsc_gov_in_data_collections.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/data/collections/EOS-04_SAR-MRS_SM",
+      "status": 401,
+      "body_head": "{\"ErrorCode\":\"401\",\"Description\":\"UNAUTHORIZED\",\"Action\":\"Invalid session detected! Please login again.\"}",
+      "evidence": "evidence/probes/stac_bhoonidhi_api_nrsc_gov_in_data_collections_EOS_04_SAR_MRS_SM.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/data/search?collections=EOS-04_SAR-MRS_SM&limit=1",
+      "status": 401,
+      "body_head": "{\"ErrorCode\":\"401\",\"Description\":\"UNAUTHORIZED\",\"Action\":\"Invalid session detected! Please login again.\"}",
+      "evidence": "evidence/probes/stac_bhoonidhi_api_nrsc_gov_in_data_search_collections_EOS_04_SAR_MRS_SM_limit_1.txt"
+    }
+  ],
+  "vista": {
+    "url": "https://bhoonidhi.nrsc.gov.in/vista/Vista",
+    "method": "POST {action: GETCONFIG}",
+    "status": 200,
+    "requires_token": true,
+    "ogc_xml": false,
+    "evidence": "evidence/probes/vista_getconfig_noauth.txt"
+  },
+  "ogc_endpoints": [
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/wms?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_wms_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/wms?service=WMTS&version=1.0.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_wms_service_WMTS_version_1_0_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/wms?service=WCS&version=2.0.1&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_wms_service_WCS_version_2_0_1_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/ows?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_ows_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/ows?service=WMTS&version=1.0.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_ows_service_WMTS_version_1_0_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/ows?service=WCS&version=2.0.1&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_ows_service_WCS_version_2_0_1_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/geoserver/wms?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_geoserver_wms_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/geoserver/ows?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_geoserver_ows_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/geoserver/ows?service=WMTS&version=1.0.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_geoserver_ows_service_WMTS_version_1_0_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/geoserver/ows?service=WCS&version=2.0.1&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_geoserver_ows_service_WCS_version_2_0_1_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/geoserver/gwc/service/wmts?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_geoserver_gwc_service_wmts_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/cgi-bin/mapserv?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_cgi_bin_mapserv_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/mapproxy/service?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_mapproxy_service_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/service/wms?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_service_wms_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/bhoonidhi/wms?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_bhoonidhi_wms_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/bhoonidhi/wms?service=WMTS&version=1.0.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_bhoonidhi_wms_service_WMTS_version_1_0_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/bhoonidhi/wms?service=WCS&version=2.0.1&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_bhoonidhi_wms_service_WCS_version_2_0_1_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/bhoonidhi/ows?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_bhoonidhi_ows_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/bhoonidhi/ows?service=WMTS&version=1.0.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_bhoonidhi_ows_service_WMTS_version_1_0_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/bhoonidhi/ows?service=WCS&version=2.0.1&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_bhoonidhi_ows_service_WCS_version_2_0_1_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/bhoonidhi/geoserver/wms?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_bhoonidhi_geoserver_wms_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/bhoonidhi/geoserver/ows?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_bhoonidhi_geoserver_ows_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/bhoonidhi/geoserver/ows?service=WMTS&version=1.0.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_bhoonidhi_geoserver_ows_service_WMTS_version_1_0_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/bhoonidhi/geoserver/ows?service=WCS&version=2.0.1&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_bhoonidhi_geoserver_ows_service_WCS_version_2_0_1_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/bhoonidhi/geoserver/gwc/service/wmts?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_bhoonidhi_geoserver_gwc_service_wmts_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/bhoonidhi/cgi-bin/mapserv?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_bhoonidhi_cgi_bin_mapserv_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/bhoonidhi/mapproxy/service?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_bhoonidhi_mapproxy_service_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/bhoonidhi/service/wms?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_bhoonidhi_service_wms_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/vista/wms?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_vista_wms_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/vista/wms?service=WMTS&version=1.0.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_vista_wms_service_WMTS_version_1_0_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/vista/wms?service=WCS&version=2.0.1&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_vista_wms_service_WCS_version_2_0_1_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/vista/ows?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_vista_ows_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/vista/ows?service=WMTS&version=1.0.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_vista_ows_service_WMTS_version_1_0_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/vista/ows?service=WCS&version=2.0.1&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_vista_ows_service_WCS_version_2_0_1_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/vista/geoserver/wms?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_vista_geoserver_wms_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/vista/geoserver/ows?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_vista_geoserver_ows_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/vista/geoserver/ows?service=WMTS&version=1.0.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_vista_geoserver_ows_service_WMTS_version_1_0_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/vista/geoserver/ows?service=WCS&version=2.0.1&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_vista_geoserver_ows_service_WCS_version_2_0_1_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/vista/geoserver/gwc/service/wmts?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_vista_geoserver_gwc_service_wmts_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/vista/cgi-bin/mapserv?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_vista_cgi_bin_mapserv_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/vista/mapproxy/service?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_vista_mapproxy_service_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi.nrsc.gov.in/vista/service/wms?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/html",
+      "bytes": 5804,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_nrsc_gov_in_vista_service_wms_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/wms?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/plain",
+      "bytes": 36,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_wms_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/wms?service=WMTS&version=1.0.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/plain",
+      "bytes": 36,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_wms_service_WMTS_version_1_0_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/wms?service=WCS&version=2.0.1&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/plain",
+      "bytes": 36,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_wms_service_WCS_version_2_0_1_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/ows?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/plain",
+      "bytes": 36,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_ows_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/ows?service=WMTS&version=1.0.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/plain",
+      "bytes": 36,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_ows_service_WMTS_version_1_0_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/ows?service=WCS&version=2.0.1&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/plain",
+      "bytes": 36,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_ows_service_WCS_version_2_0_1_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/geoserver/wms?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/plain",
+      "bytes": 36,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_geoserver_wms_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/geoserver/ows?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/plain",
+      "bytes": 36,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_geoserver_ows_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/geoserver/ows?service=WMTS&version=1.0.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/plain",
+      "bytes": 36,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_geoserver_ows_service_WMTS_version_1_0_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/geoserver/ows?service=WCS&version=2.0.1&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/plain",
+      "bytes": 36,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_geoserver_ows_service_WCS_version_2_0_1_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/geoserver/gwc/service/wmts?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/plain",
+      "bytes": 36,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_geoserver_gwc_service_wmts_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/cgi-bin/mapserv?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/plain",
+      "bytes": 36,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_cgi_bin_mapserv_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/mapproxy/service?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/plain",
+      "bytes": 36,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_mapproxy_service_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/service/wms?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "text/plain",
+      "bytes": 36,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_service_wms_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/data/wms?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "application/json",
+      "bytes": 120,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_data_wms_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/data/wms?service=WMTS&version=1.0.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "application/json",
+      "bytes": 120,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_data_wms_service_WMTS_version_1_0_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/data/wms?service=WCS&version=2.0.1&request=GetCapabilities",
+      "status": 404,
+      "content_type": "application/json",
+      "bytes": 120,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_data_wms_service_WCS_version_2_0_1_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/data/ows?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "application/json",
+      "bytes": 120,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_data_ows_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/data/ows?service=WMTS&version=1.0.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "application/json",
+      "bytes": 120,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_data_ows_service_WMTS_version_1_0_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/data/ows?service=WCS&version=2.0.1&request=GetCapabilities",
+      "status": 404,
+      "content_type": "application/json",
+      "bytes": 120,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_data_ows_service_WCS_version_2_0_1_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/data/geoserver/wms?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "application/json",
+      "bytes": 130,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_data_geoserver_wms_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/data/geoserver/ows?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "application/json",
+      "bytes": 130,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_data_geoserver_ows_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/data/geoserver/ows?service=WMTS&version=1.0.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "application/json",
+      "bytes": 130,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_data_geoserver_ows_service_WMTS_version_1_0_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/data/geoserver/ows?service=WCS&version=2.0.1&request=GetCapabilities",
+      "status": 404,
+      "content_type": "application/json",
+      "bytes": 130,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_data_geoserver_ows_service_WCS_version_2_0_1_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/data/geoserver/gwc/service/wmts?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "application/json",
+      "bytes": 143,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_data_geoserver_gwc_service_wmts_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/data/cgi-bin/mapserv?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "application/json",
+      "bytes": 132,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_data_cgi_bin_mapserv_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/data/mapproxy/service?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "application/json",
+      "bytes": 133,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_data_mapproxy_service_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    },
+    {
+      "url": "https://bhoonidhi-api.nrsc.gov.in/data/service/wms?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "content_type": "application/json",
+      "bytes": 128,
+      "ogc_xml": false,
+      "evidence": "evidence/probes/ogc_bhoonidhi_api_nrsc_gov_in_data_service_wms_service_WMS_version_1_3_0_request_GetCapabilities.txt"
+    }
+  ],
+  "other_portals": [
+    {
+      "name": "bhuvan_vec1",
+      "url": "https://bhuvan-vec1.nrsc.gov.in/bhuvan/wms?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 200,
+      "ogc_xml": true,
+      "layer_count": 7238,
+      "soil_moisture_like_layers": [],
+      "evidence": "evidence/probes/caps_bhuvan_vec1.txt"
+    },
+    {
+      "name": "bhuvan_ras2",
+      "url": "https://bhuvan-ras2.nrsc.gov.in/bhuvan/wms?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "ogc_xml": false,
+      "layer_count": 0,
+      "soil_moisture_like_layers": [],
+      "evidence": "evidence/probes/caps_bhuvan_ras2.txt"
+    },
+    {
+      "name": "vedas_geoserver",
+      "url": "https://vedas.sac.gov.in/geoserver/wms?service=WMS&version=1.3.0&request=GetCapabilities",
+      "status": 404,
+      "ogc_xml": false,
+      "layer_count": 0,
+      "soil_moisture_like_layers": [],
+      "evidence": "evidence/probes/caps_vedas_geoserver.txt"
+    }
+  ]
+}

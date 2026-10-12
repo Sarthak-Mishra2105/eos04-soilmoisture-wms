@@ -1,0 +1,5 @@
+# status: 404
+# content-type: text/plain; charset=utf-8
+# final-url: https://bhoonidhi-api.nrsc.gov.in/wms?service=WMTS&version=1.0.0&request=GetCapabilities
+
+{"error_msg":"404 Route Not Found"}

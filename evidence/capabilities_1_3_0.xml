@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?><WMS_Capabilities version="1.3.0" updateSequence="420" xmlns="http://www.opengis.net/wms" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wms http://localhost:8080/geoserver/schemas/wms/1.3.0/capabilities_1_3_0.xsd">
+  <Service>
+    <Name>WMS</Name>
+    <Title>Bhoonidhi EOS-04 Soil Moisture WMS</Title>
+    <Abstract>Time-enabled OGC WMS 1.3.0 for ISRO EOS-04 (RISAT-1A) SAR-MRS 500 m surface soil moisture
+products from NRSC Bhoonidhi. Its documented API provides STAC search and whole-product
+downloads; no public WMS for this product was found in the documented/probed endpoints.
+Supports GetCapabilities, GetMap (with TIME), GetFeatureInfo and GetLegendGraphic.
+Built as a CyberGIS course assignment; not an official NRSC/ISRO service.</Abstract>
+    <KeywordList>
+      <Keyword>soil moisture</Keyword>
+      <Keyword>EOS-04</Keyword>
+      <Keyword>RISAT-1A</Keyword>
+      <Keyword>SAR</Keyword>
+      <Keyword>C-band</Keyword>
+      <Keyword>Bhoonidhi</Keyword>
+      <Keyword>ISRO</Keyword>
+      <Keyword>NRSC</Keyword>
+      <Keyword>agriculture</Keyword>
+      <Keyword>hydrology</Keyword>
+      <Keyword>time series</Keyword>
+      <Keyword>WMS</Keyword>
+    </KeywordList>
+    <OnlineResource xlink:type="simple" xlink:href="http://localhost:8080/geoserver/www/eos04-demo/index.html"/>
+    <ContactInformation>
+      <ContactPersonPrimary>
+        <ContactPerson>Sarthak Mishra</ContactPerson>
+        <ContactOrganization>IIIT Hyderabad - Cyber GIS: Geospatial Web and GeoBI (course assignment)</ContactOrganization>
+      </ContactPersonPrimary>
+      <ContactPosition>Student</ContactPosition>
+      <ContactAddress>
+        <AddressType/>
+        <Address/>
+        <City>Hyderabad</City>
+        <StateOrProvince>Telangana</StateOrProvince>
+        <PostCode/>
+        <Country>India</Country>
+      </ContactAddress>
+      <ContactVoiceTelephone/>
+      <ContactFacsimileTelephone/>
+      <ContactElectronicMailAddress><![CDATA[ ]]></ContactElectronicMailAddress>
+    </ContactInformation>
+    <Fees>NONE</Fees>
+    <AccessConstraints>NONE. Source data: Bhoonidhi open data, NRSC/ISRO.</AccessConstraints>
+  </Service>
+  <Capability>
+    <Request>
+      <GetCapabilities>
+        <Format>text/xml</Format>
+        <DCPType>
+          <HTTP>
+            <Get>
+              <OnlineResource xlink:type="simple" xlink:href="http://localhost:8080/geoserver/bhoonidhi/ows?SERVICE=WMS&amp;"/>
+            </Get>
+            <Post>
+              <OnlineResource xlink:type="simple" xlink:href="http://localhost:8080/geoserver/bhoonidhi/ows?SERVICE=WMS&amp;"/>
+            </Post>
+          </HTTP>
+        </DCPType>
+      </GetCapabilities>
+      <GetMap>
+        <Format>image/png</Format>
+        <Format>application/atom+xml</Format>
+        <Format>application/json;type=utfgrid</Format>
+        <Format>application/pdf</Format>
+        <Format>application/rss+xml</Format>
+        <Format>application/vnd.google-earth.kml+xml</Format>
+        <Format>application/vnd.google-earth.kml+xml;mode=networklink</Format>
+        <Format>application/vnd.google-earth.kmz</Format>
+        <Format>image/geotiff</Format>
+        <Format>image/geotiff8</Format>
+        <Format>image/gif</Format>
+        <Format>image/jpeg</Format>
+        <Format>image/png; mode=8bit</Format>
+        <Format>image/svg+xml</Format>
+        <Format>image/tiff</Format>
+        <Format>image/tiff8</Format>
+        <Format>image/vnd.jpeg-png</Format>
+        <Format>image/vnd.jpeg-png8</Format>
+        <Format>text/html; subtype=openlayers</Format>
+        <Format>text/html; subtype=openlayers10</Format>
+        <Format>text/html; subtype=openlayers2</Format>
+        <Format>text/html; subtype=openlayers3</Format>
+        <DCPType>
+          <HTTP>
+            <Get>
+              <OnlineResource xlink:type="simple" xlink:href="http://localhost:8080/geoserver/bhoonidhi/ows?SERVICE=WMS&amp;"/>
+            </Get>
+          </HTTP>
+        </DCPType>
+      </GetMap>
+      <GetFeatureInfo>
+        <Format>text/plain</Format>
+        <Format>text/html</Format>
+        <Format>application/json</Format>
+        <Format>application/vnd.ogc.gml</Format>
+        <Format>text/xml</Format>
+        <Format>application/vnd.ogc.gml/3.1.1</Format>
+        <Format>text/xml; subtype=gml/3.1.1</Format>
+        <DCPType>
+          <HTTP>
+            <Get>
+              <OnlineResource xlink:type="simple" xlink:href="http://localhost:8080/geoserver/bhoonidhi/ows?SERVICE=WMS&amp;"/>
+            </Get>
+          </HTTP>
+        </DCPType>
+      </GetFeatureInfo>
+    </Request>
+    <Exception>
+      <Format>XML</Format>
+      <Format>INIMAGE</Format>
+      <Format>BLANK</Format>
+      <Format>JSON</Format>
+    </Exception>
+    <Layer>
+      <Title>Bhoonidhi EOS-04 Soil Moisture WMS</Title>
+      <Abstract>Time-enabled OGC WMS 1.3.0 for ISRO EOS-04 (RISAT-1A) SAR-MRS 500 m surface soil moisture
+products from NRSC Bhoonidhi. Its documented API provides STAC search and whole-product
+downloads; no public WMS for this product was found in the documented/probed endpoints.
+Supports GetCapabilities, GetMap (with TIME), GetFeatureInfo and GetLegendGraphic.
+Built as a CyberGIS course assignment; not an official NRSC/ISRO service.</Abstract>
+      <!--Limited list of EPSG projections:-->
+      <CRS>EPSG:4326</CRS>
+      <CRS>EPSG:3857</CRS>
+      <CRS>EPSG:4269</CRS>
+      <CRS>EPSG:32643</CRS>
+      <CRS>EPSG:32644</CRS>
+      <CRS>CRS:84</CRS>
+      <EX_GeographicBoundingBox>
+        <westBoundLongitude>72.0</westBoundLongitude>
+        <eastBoundLongitude>80.0</eastBoundLongitude>
+        <southBoundLatitude>26.0</southBoundLatitude>
+        <northBoundLatitude>34.0</northBoundLatitude>
+      </EX_GeographicBoundingBox>
+      <BoundingBox CRS="CRS:84" minx="72.0" miny="26.0" maxx="80.0" maxy="34.0"/>
+      <BoundingBox CRS="EPSG:4326" minx="26.0" miny="72.0" maxx="34.0" maxy="80.0"/>
+      <BoundingBox CRS="EPSG:3857" minx="8015003.337115697" miny="2999080.9434706424" maxx="8905559.263461886" maxy="4028802.0261344067"/>
+      <BoundingBox CRS="EPSG:4269" minx="26.000000021178003" miny="72.0" maxx="34.00000003419761" maxy="80.0"/>
+      <BoundingBox CRS="EPSG:32643" minx="199681.92519736348" miny="2875726.3779202458" maxx="1000782.2671701445" maxy="3773444.703047922"/>
+      <BoundingBox CRS="EPSG:32644" minx="-402997.9474947385" miny="2876066.7246617326" maxx="407650.39665729273" maxy="3798895.9663671465"/>
+      <Layer queryable="1" opaque="0">
+        <Name>eos04_soil_moisture</Name>
+        <Title>EOS-04 (RISAT-1A) SAR-MRS Surface Soil Moisture, 500 m</Title>
+        <Abstract>Volumetric surface soil moisture (m3/m3) at ~500 m from ISRO's EOS-04 C-band SAR (MRS mode) combined with SMAP L-band radiometer data (active-passive algorithm, SAC/ISRO ATBD Dec 2023). Source products: Bhoonidhi STAC collection EOS-04_SAR-MRS_SM (NRSC). Each TIME value is one acquisition date; the 17-day EOS-04 repeat cycle means a given location is observed about every 17 days. ATBD range 0.02-0.65 m3/m3 (some delivered values exceed 0.65); nodata = -9999. Band 1, EPSG:4326, 0.005 deg grid, nearest-neighbour preparation.</Abstract>
+        <KeywordList>
+          <Keyword>soil moisture</Keyword>
+          <Keyword>EOS-04</Keyword>
+          <Keyword>RISAT-1A</Keyword>
+          <Keyword>SAR</Keyword>
+          <Keyword>C-band</Keyword>
+          <Keyword>Bhoonidhi</Keyword>
+          <Keyword>ISRO</Keyword>
+          <Keyword>NRSC</Keyword>
+          <Keyword>agriculture</Keyword>
+          <Keyword>hydrology</Keyword>
+          <Keyword>time series</Keyword>
+          <Keyword>WMS</Keyword>
+        </KeywordList>
+        <CRS>EPSG:4326</CRS>
+        <CRS>CRS:84</CRS>
+        <EX_GeographicBoundingBox>
+          <westBoundLongitude>72.0</westBoundLongitude>
+          <eastBoundLongitude>80.0</eastBoundLongitude>
+          <southBoundLatitude>26.0</southBoundLatitude>
+          <northBoundLatitude>34.0</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <BoundingBox CRS="CRS:84" minx="72.0" miny="26.0" maxx="80.0" maxy="34.0"/>
+        <BoundingBox CRS="EPSG:4326" minx="26.0" miny="72.0" maxx="34.0" maxy="80.0"/>
+        <BoundingBox CRS="EPSG:3857" minx="8015003.337115697" miny="2999080.9434706424" maxx="8905559.263461886" maxy="4028802.0261344067"/>
+        <BoundingBox CRS="EPSG:4269" minx="26.000000021178003" miny="72.0" maxx="34.00000003419761" maxy="80.0"/>
+        <BoundingBox CRS="EPSG:32643" minx="199681.92519736348" miny="2875726.3779202458" maxx="1000782.2671701445" maxy="3773444.703047922"/>
+        <BoundingBox CRS="EPSG:32644" minx="-402997.9474947385" miny="2876066.7246617326" maxx="407650.39665729273" maxy="3798895.9663671465"/>
+        <Dimension name="time" default="2025-10-24T00:00:00Z" units="ISO8601">2025-06-03T00:00:00.000Z,2025-06-10T00:00:00.000Z,2025-06-11T00:00:00.000Z,2025-06-19T00:00:00.000Z,2025-06-20T00:00:00.000Z,2025-06-27T00:00:00.000Z,2025-06-28T00:00:00.000Z,2025-07-06T00:00:00.000Z,2025-07-07T00:00:00.000Z,2025-07-14T00:00:00.000Z,2025-07-15T00:00:00.000Z,2025-07-23T00:00:00.000Z,2025-07-24T00:00:00.000Z,2025-08-09T00:00:00.000Z,2025-08-26T00:00:00.000Z,2025-08-27T00:00:00.000Z,2025-09-03T00:00:00.000Z,2025-09-04T00:00:00.000Z,2025-09-12T00:00:00.000Z,2025-09-13T00:00:00.000Z,2025-09-20T00:00:00.000Z,2025-09-21T00:00:00.000Z,2025-09-29T00:00:00.000Z,2025-09-30T00:00:00.000Z,2025-10-07T00:00:00.000Z,2025-10-08T00:00:00.000Z,2025-10-16T00:00:00.000Z,2025-10-17T00:00:00.000Z,2025-10-24T00:00:00.000Z</Dimension>
+        <Attribution>
+          <Title>Data: NRSC/ISRO Bhoonidhi (EOS-04 SAR-MRS SM); algorithm: SAC/ISRO</Title>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://bhoonidhi.nrsc.gov.in"/>
+        </Attribution>
+        <MetadataURL type="Other">
+          <Format>text/html</Format>
+          <OnlineResource xlink:type="simple" xlink:href="https://bhoonidhi.nrsc.gov.in/bhoonidhi_resources/help/docs/ATBD_EOS04_SSM_Dec2023_v2.pdf"/>
+        </MetadataURL>
+        <Style>
+          <Name>soil_moisture</Name>
+          <Title>Surface soil moisture (mÂ³/mÂ³)</Title>
+          <Abstract>Continuous dry-to-wet ramp for EOS-04 SAR-MRS volumetric surface soil moisture.
+        Valid product range is 0.02-0.65 mÂ³/mÂ³ (SAC ATBD, Dec 2023); nodata is transparent.</Abstract>
+          <LegendURL width="69" height="212">
+            <Format>image/png</Format>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://localhost:8080/geoserver/bhoonidhi/ows?service=WMS&amp;version=1.3.0&amp;request=GetLegendGraphic&amp;format=image%2Fpng&amp;width=20&amp;height=20&amp;layer=eos04_soil_moisture"/>
+          </LegendURL>
+        </Style>
+      </Layer>
+    </Layer>
+  </Capability>
+</WMS_Capabilities>

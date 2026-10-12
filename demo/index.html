@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EOS-04 Soil Moisture WMS</title>
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+<style>
+  :root { --bg: #fff; --fg: #1d2330; --muted: #5b6475; --panel: rgba(255,255,255,.94); --accent: #01665e; --line: #d9dde5; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #11151c; --fg: #e6e9ef; --muted: #9aa3b2; --panel: rgba(22,27,36,.94); --accent: #5ab4ac; --line: #2c3442; }
+  }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--fg);
+    font: 14px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  #map { position: absolute; inset: 0; background: #e6eef0; }
+  .panel { position: absolute; z-index: 1000; background: var(--panel); border: 1px solid var(--line);
+    border-radius: 8px; padding: 12px 14px; box-shadow: 0 2px 10px rgba(0,0,0,.15); }
+  #ctrl { top: 12px; left: 56px; right: 12px; max-width: 560px; }
+  #ctrl h1 { font-size: 15px; margin: 0 0 4px; }
+  #ctrl .sub { color: var(--muted); font-size: 12px; margin-bottom: 10px; }
+  .row { display: flex; gap: 8px; align-items: center; }
+  input[type=range] { flex: 1; accent-color: var(--accent); }
+  button { background: var(--accent); color: #fff; border: 0; border-radius: 6px; padding: 6px 10px; cursor: pointer; }
+  select { background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; padding: 4px; }
+  #date { font-variant-numeric: tabular-nums; font-weight: 600; min-width: 92px; }
+  #legend { bottom: 24px; right: 12px; }
+  #legend img { display: block; background: white; border-radius: 4px; padding: 5px; }
+  #status { font-size: 12px; color: var(--muted); margin-top: 8px; }
+  details { margin-top: 6px; }
+  details a { color: var(--accent); }
+  #info { bottom: 24px; left: 12px; max-width: 340px; font-size: 12px; }
+  #info code { word-break: break-all; color: var(--muted); }
+  @media (max-width: 600px) { #ctrl { left: 12px; top: 64px; } #legend { display: none; } }
+</style>
+</head>
+<body>
+<div id="map"></div>
+
+<div id="ctrl" class="panel">
+  <h1>EOS-04 SAR-MRS Surface Soil Moisture (500 m)</h1>
+  <div class="sub">Punjab and Haryana region, June–October 2025. Click the map for soil moisture.</div>
+  <div class="row">
+    <button id="play" title="Animate through dates">Play</button>
+    <input id="slider" type="range" min="0" max="0" value="0" step="1" aria-label="Acquisition date">
+    <span id="date">loading…</span>
+  </div>
+  <div class="row" style="margin-top:8px">
+    <label for="opacity">Opacity</label>
+    <input id="opacity" type="range" min="0" max="1" step="0.05" value="0.85">
+    <select id="dateList" aria-label="Pick a date"></select>
+  </div>
+  <div class="row" style="margin-top:8px">
+    <label for="period">Coverage</label>
+    <select id="period"><option value="day">Acquisition day</option><option value="cycle">17-day window ending on date</option></select>
+    <button id="extent" title="Show the full collection">Full extent</button>
+  </div>
+  <div id="status" role="status">Loading collection…</div>
+</div>
+
+<div id="legend" class="panel"><div style="font-size:12px;margin-bottom:4px">m³/m³</div><img id="legendImg" alt="Legend"></div>
+<div id="info" class="panel">Click on the map to run <b>GetFeatureInfo</b>.</div>
+
+<script src="vendor/leaflet/leaflet.js"></script>
+<script>
+// Same-origin by default (page is served from GeoServer's /www/demo/); override with ?wms=<url>.
+const params = new URLSearchParams(location.search);
+const WMS = params.get('wms') || new URL('../../bhoonidhi/wms', location.href).href;
+const LAYER = params.get('layer') || 'eos04_soil_moisture';
+
+const map = L.map('map', { zoomControl: true }).setView([22.5, 79], 5);
+// Natural Earth sample layers are already present in this GeoServer installation.
+// All resources are local; the demo works without a CDN or Internet basemap.
+const base = L.tileLayer.wms(new URL('../../ne/wms', location.href).href, {
+  layers: 'countries,boundary_lines', format: 'image/png', version: '1.3.0',
+  opacity: 0.45, attribution: 'Basemap: Natural Earth, via local GeoServer'
+}).addTo(map);
+base.on('tileerror', () => document.getElementById('status').textContent = 'Local Natural Earth basemap unavailable; moisture layer remains available.');
+
+let times = [], idx = 0, timer = null, collectionExtent = null, summary = null, querySequence = 0;
+const sm = L.tileLayer.wms(WMS, {
+  layers: LAYER, format: 'image/png', transparent: true, version: '1.3.0',
+  opacity: 0.85, attribution: 'Soil moisture: NRSC/ISRO Bhoonidhi (EOS-04)'
+});
+
+document.getElementById('legendImg').src =
+  `${WMS}?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image/png&layer=${LAYER}` +
+  `&legend_options=fontAntiAliasing:true;fontSize:11;dx:4`;
+
+function timeValue() {
+  const t = times[idx];
+  if (document.getElementById('period').value === 'day') return t;
+  const end = new Date(t), start = new Date(end);
+  start.setUTCDate(start.getUTCDate() - 16);
+  end.setUTCHours(23, 59, 59, 999);
+  return `${start.toISOString()}/${end.toISOString()}`;
+}
+
+function setTime(i) {
+  if (!times.length) return;
+  querySequence++;
+  map.closePopup();
+  document.getElementById('info').innerHTML = 'Click on the map to run <b>GetFeatureInfo</b>.';
+  idx = (i + times.length) % times.length;
+  const t = times[idx];
+  sm.setParams({ time: timeValue() });
+  document.getElementById('slider').value = idx;
+  document.getElementById('dateList').value = t;
+  document.getElementById('date').textContent = t.slice(0, 10);
+  const cycle = document.getElementById('period').value === 'cycle';
+  const start = timeValue().split('/')[0].slice(0, 10);
+  const count = summary?.dates?.filter(d => cycle ? d.date >= start && d.date <= t.slice(0, 10) : d.date === t.slice(0, 10))
+    .reduce((total, d) => total + d.products, 0);
+  document.getElementById('status').textContent =
+    `${summary?.products ?? ''} products · ${times.length} acquisition days` +
+    (count ? ` · ${count} scenes in selected ${cycle ? 'window' : 'day'}` : '') +
+    ' · Blank areas have no observation.';
+}
+
+async function loadCapabilities() {
+  const url = `${WMS}?service=WMS&version=1.3.0&request=GetCapabilities`;
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`Capabilities HTTP ${response.status}`);
+  const xml = new DOMParser().parseFromString(await response.text(), 'application/xml');
+  const layer = [...xml.getElementsByTagName('Layer')]
+    .find(l => [...l.children].some(c => c.localName === 'Name' && c.textContent.endsWith(LAYER)));
+  if (!layer) throw new Error('Soil-moisture layer is missing from capabilities');
+  const dim = [...layer.getElementsByTagName('Dimension')].find(d => d.getAttribute('name') === 'time');
+  if (!dim) throw new Error('TIME dimension is unavailable');
+  try { const r = await fetch('dataset.json'); if (r.ok) summary = await r.json(); } catch (_) {}
+  times = dim.textContent.trim().split(',').map(s => s.trim()).filter(Boolean);
+  const bb = layer.getElementsByTagName('EX_GeographicBoundingBox')[0];
+  const g = n => parseFloat(bb.getElementsByTagName(n)[0].textContent);
+  const extent = L.latLngBounds([[g('southBoundLatitude'), g('westBoundLongitude')],
+                                 [g('northBoundLatitude'), g('eastBoundLongitude')]]);
+  collectionExtent = extent;
+  const fit = () => { map.invalidateSize(); map.fitBounds(extent, { padding: [20, 20], animate: false }); };
+  // A page opened in a hidden/background frame has zero size; fit once it gets laid out.
+  if (map.getContainer().clientWidth) fit(); else addEventListener('resize', fit, { once: true });
+
+  const slider = document.getElementById('slider');
+  slider.max = times.length - 1;
+  const sel = document.getElementById('dateList');
+  times.forEach(t => sel.add(new Option(t.slice(0, 10), t)));
+  sm.addTo(map);
+  setTime(times.length - 1);     // latest = the layer's default TIME
+  for (const [name, lat, lon] of [['Ludhiana',30.901,75.857],['Hisar',29.149,75.722],['Chandigarh',30.733,76.779],['Delhi',28.614,77.209]]) {
+    L.circleMarker([lat,lon], { radius: 3, color: '#334155', fillColor: '#fff', fillOpacity: 1 })
+      .addTo(map).bindTooltip(name, { permanent: true, direction: 'right' });
+  }
+}
+
+document.getElementById('slider').oninput = e => setTime(+e.target.value);
+document.getElementById('dateList').onchange = e => setTime(times.indexOf(e.target.value));
+document.getElementById('period').onchange = () => setTime(idx);
+document.getElementById('extent').onclick = () => { if (collectionExtent) map.fitBounds(collectionExtent); };
+document.getElementById('opacity').oninput = e => sm.setOpacity(+e.target.value);
+document.getElementById('play').onclick = e => {
+  if (!times.length) return;
+  if (timer) { clearInterval(timer); timer = null; e.target.textContent = 'Play'; return; }
+  e.target.textContent = 'Pause';
+  timer = setInterval(() => setTime(idx + 1), 2500);
+};
+
+map.on('click', async ev => {
+  if (!times.length) return;
+  const sequence = ++querySequence, requestedTime = timeValue();
+  // WMS 1.3.0 GetFeatureInfo in EPSG:3857 with I/J pixel coordinates.
+  const size = map.getSize(), b = map.getBounds();
+  const sw = L.CRS.EPSG3857.project(b.getSouthWest()), ne = L.CRS.EPSG3857.project(b.getNorthEast());
+  const pt = map.latLngToContainerPoint(ev.latlng).round();
+  const q = new URLSearchParams({
+    service: 'WMS', version: '1.3.0', request: 'GetFeatureInfo', layers: LAYER, query_layers: LAYER,
+    styles: '', crs: 'EPSG:3857', bbox: [sw.x, sw.y, ne.x, ne.y].join(','), width: size.x, height: size.y,
+    i: Math.min(Math.max(pt.x,0),size.x-1), j: Math.min(Math.max(pt.y,0),size.y-1),
+    info_format: 'application/json', time: requestedTime
+  });
+  const url = `${WMS}?${q}`;
+  const box = document.getElementById('info');
+  box.innerHTML = 'Querying…';
+  try {
+    const fc = await (await fetch(url)).json();
+    if (sequence !== querySequence) return;
+    const f = fc.features && fc.features[0];
+    const v = f ? Object.values(f.properties)[0] : null;
+    const val = (v === null || v === undefined || !Number.isFinite(+v) || +v < 0 || +v > 1)
+      ? 'No observation for this location and date' : `${(+v).toFixed(3)} m³/m³`;
+    box.innerHTML = `<b>${val}</b> at ${ev.latlng.lat.toFixed(4)}, ${ev.latlng.lng.toFixed(4)}<br>` +
+      `${requestedTime.includes('/') ? 'window ' + requestedTime.split('/').map(t => t.slice(0,10)).join(' to ') : 'date ' + requestedTime.slice(0,10)}` +
+      `<br><details><summary>HTTP request</summary>` +
+      `<a href="${url.replace(/&/g, '&amp;')}" target="_blank" rel="noopener">Open GetFeatureInfo JSON</a></details>`;
+    L.popup().setLatLng(ev.latlng).setContent(val).openOn(map);
+  } catch (err) {
+    if (sequence === querySequence) box.textContent = 'GetFeatureInfo failed: ' + err;
+  }
+});
+
+loadCapabilities().catch(err => {
+  document.getElementById('date').textContent = 'capabilities error';
+  document.getElementById('status').textContent = err.message;
+  console.error(err);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+# status: 401
+# content-type: application/json
+# final-url: https://bhoonidhi-api.nrsc.gov.in/data/search?collections=EOS-04_SAR-MRS_SM&limit=1
+
+{"ErrorCode":"401","Description":"UNAUTHORIZED","Action":"Invalid session detected! Please login again."}

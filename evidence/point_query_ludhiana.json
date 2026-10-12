@@ -1,0 +1,17 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "",
+      "geometry": null,
+      "properties": {
+        "soil_moisture": 0.23198935389518738
+      }
+    }
+  ],
+  "totalFeatures": "unknown",
+  "numberReturned": 1,
+  "timeStamp": "2026-10-07T18:09:30.198Z",
+  "crs": null
+}

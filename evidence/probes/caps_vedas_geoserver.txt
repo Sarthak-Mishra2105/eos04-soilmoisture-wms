@@ -1,0 +1,9 @@
+# status: 404
+# content-type: text/html
+# final-url: https://vedas.sac.gov.in/geoserver/wms?service=WMS&version=1.3.0&request=GetCapabilities
+
+<html>
+	<body>
+		Oh! Could not find the requested resource
+	</body>
+</html>
